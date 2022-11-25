@@ -138,8 +138,9 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-
+  console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    console.log(`Login`);
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(` `)[0]
     }`;
@@ -152,7 +153,6 @@ btnLogin.addEventListener('click', function (e) {
 });
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  inputTransferAmount.value = inputTransferTo.value = ``;
 
   const amount = Number(inputTransferAmount.value);
   const receiverAcc = accounts.find(
@@ -169,6 +169,7 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movements.push(amount);
     updateUI(currentAccount);
   }
+  inputTransferAmount.value = inputTransferTo.value = ``;
 });
 
 btnClose.addEventListener('click', function (e) {
