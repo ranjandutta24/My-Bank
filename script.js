@@ -87,7 +87,6 @@ const displayMovements = movments => {
   });
 };
 
-displayMovements(account1.movements);
 const userName = `Steven Thomas Williams`;
 
 const computeUserName = accs => {
@@ -112,8 +111,6 @@ const calcTotal = mov => {
 
 // const calcTotal = movements.reduce((acc, cur) => acc + cur, 0);
 
-console.log(calcTotal(account1.movements));
-
 /////////////////////////////////////////////////
 let currentAccount;
 btnLogin.addEventListener('click', function (e) {
@@ -124,5 +121,13 @@ btnLogin.addEventListener('click', function (e) {
   console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     console.log(`Login`);
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(` `)[0]
+    }`;
+    containerApp.style.opacity = 100;
+    displayMovements(currentAccount.movements);
+    calcTotal(account1.movements);
+    inputLoginUsername.value = inputLoginPin.value = ``;
+    inputLoginPin.blur();
   }
 });
