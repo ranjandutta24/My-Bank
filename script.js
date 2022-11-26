@@ -62,14 +62,6 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
 
 const displayMovements = movments => {
   containerMovements.innerHTML = '';
@@ -175,8 +167,11 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener(`click`, function (e) {
   e.preventDefault();
   const amount = Number(inputLoanAmount.value);
-  if (amount > 0) {
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= 0.1 * amount)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
   }
+  inputLoanAmount.value = ``;
 });
 
 btnClose.addEventListener('click', function (e) {
