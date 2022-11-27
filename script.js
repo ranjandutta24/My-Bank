@@ -75,7 +75,7 @@ const displayMovements = (movments, sort = false) => {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}₹</div>
+        <div class="movements__value">${mov.toFixed(2)}₹</div>
     </div>`;
     containerMovements.insertAdjacentHTML(`afterbegin`, html);
   });
@@ -95,7 +95,9 @@ const computeUserName = accs => {
 console.log(computeUserName(accounts));
 
 const calcTotal = account => {
-  account.balance = `${account.movements.reduce((acc, cur) => acc + cur, 0)}`;
+  account.balance = `${account.movements
+    .reduce((acc, cur) => acc + cur, 0)
+    .toFixed(2)}`;
   labelBalance.textContent = `${account.balance}₹`;
   //   return mov.reduce((acc, cur) => acc + cur, 0);
 };
@@ -127,6 +129,19 @@ const updateUI = function (acc) {
 
 /////////////////////////////////////////////////
 let currentAccount;
+// fake login
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
+
+const now = new Date();
+const day = `${now.getDate()}`.padStart(2, 0);
+const month = `${now.getMonth() + 1}`.padStart(2, 0);
+const year = now.getFullYear();
+const hour = now.getHours();
+const min = now.getMinutes();
+labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   currentAccount = accounts.find(
