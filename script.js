@@ -122,6 +122,21 @@ const formateDate = date => {
   }
 };
 
+const counting = number => {
+  let value = 0;
+  let endvalue = number;
+  let counter = setInterval(() => {
+    value <= endvalue - Math.round(endvalue / 200)
+      ? (value += Math.round(endvalue / 200))
+      : (value += 1);
+    // document.querySelector('.v').textContent = value;
+
+    if (value >= endvalue) {
+      clearInterval(counter);
+    }
+  }, 1);
+};
+
 const displayMovements = (acc, sort = false) => {
   containerMovements.innerHTML = '';
 
@@ -163,7 +178,19 @@ const calcTotal = account => {
   account.balance = `${account.movements
     .reduce((acc, cur) => acc + cur, 0)
     .toFixed(2)}`;
-  labelBalance.textContent = `${account.balance}₹`;
+  //   labelBalance.textContent = `${account.balance}₹`;
+  let value = 0;
+  let endvalue = account.balance;
+  let counter = setInterval(() => {
+    value <= endvalue - Math.round(endvalue / 200)
+      ? (value += Math.round(endvalue / 200))
+      : (value += 1);
+    labelBalance.textContent = `${value.toFixed(2)}₹`;
+
+    if (value >= endvalue) {
+      clearInterval(counter);
+    }
+  }, 1);
   //   return mov.reduce((acc, cur) => acc + cur, 0);
 };
 const calsDisplaySummary = function (currentAccount) {
