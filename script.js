@@ -70,9 +70,6 @@ const account4 = {
     '2021-12-25T06:04:23.907Z',
     '2022-01-25T14:18:46.235Z',
     '2022-02-05T16:33:06.386Z',
-    '2022-04-10T14:43:26.374Z',
-    '2022-06-25T18:49:59.371Z',
-    '2022-07-26T12:01:20.894Z',
   ],
   locale: 'en-GB',
 };
@@ -107,7 +104,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 
-const formateDate = date => {
+const formateDate = (date, locale) => {
   const date1 = new Date(date);
   const date2 = new Date();
   const daysPassed = Math.round(
@@ -118,10 +115,11 @@ const formateDate = date => {
   if (daysPassed === 1) return `Yesterday`;
   if (daysPassed <= 7) return `${daysPassed} Days ago`;
   else {
-    const day = `${date1.getDate()}`.padStart(2, 0);
-    const month = `${date1.getMonth() + 1}`.padStart(2, 0);
-    const year = date1.getFullYear();
-    const displayDate = `${day}/${month}/${year}`;
+    // const day = `${date1.getDate()}`.padStart(2, 0);
+    // const month = `${date1.getMonth() + 1}`.padStart(2, 0);
+    // const year = date1.getFullYear();
+    // const displayDate = `${day}/${month}/${year}`;
+    const displayDate = new Intl.DateTimeFormat(locale).format(date1);
     return displayDate;
   }
 };
@@ -151,7 +149,7 @@ const displayMovements = (acc, sort = false) => {
   movs.forEach((mov, i) => {
     const type = mov > 0 ? `deposit` : `withdrawal`;
 
-    const displayDate = formateDate(acc.movementsDates[i]);
+    const displayDate = formateDate(acc.movementsDates[i], acc.locale);
 
     const html = `  
     <div class="movements__row">
