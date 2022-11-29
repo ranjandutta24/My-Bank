@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -20,6 +20,7 @@ const account1 = {
     '2022-11-28T23:36:17.929Z',
     '2022-11-29T10:51:36.790Z',
   ],
+  locale: 'en-UK',
 };
 
 const account2 = {
@@ -37,11 +38,12 @@ const account2 = {
     '2022-06-25T18:49:59.371Z',
     '2022-07-26T12:01:20.894Z',
   ],
+  locale: 'en-IN',
 };
 
 const account3 = {
   owner: 'Anup Kumar Shingh',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
+  movements: [200, -200, 340, -300, -20, 50, 400, -76],
   interestRate: 0.7,
   pin: 3333,
   movementsDates: [
@@ -54,6 +56,7 @@ const account3 = {
     '2022-06-25T18:49:59.371Z',
     '2022-07-26T12:01:20.894Z',
   ],
+  locale: 'en-US',
 };
 
 const account4 = {
@@ -71,6 +74,7 @@ const account4 = {
     '2022-06-25T18:49:59.371Z',
     '2022-07-26T12:01:20.894Z',
   ],
+  locale: 'en-GB',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -238,13 +242,28 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(` `)[0]
     }`;
     containerApp.style.opacity = 100;
+    // const now = new Date();
+    // const day = `${now.getDate()}`.padStart(2, 0);
+    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    // const year = now.getFullYear();
+    // const hour = `${now.getHours()}`.padStart(2, 0);
+    // const min = `${now.getMinutes()}`.padStart(2, 0);
+    // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
     const now = new Date();
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const year = now.getFullYear();
-    const hour = `${now.getHours()}`.padStart(2, 0);
-    const min = `${now.getMinutes()}`.padStart(2, 0);
-    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+    // const locale = navigator.language;
+    const locale = currentAccount.locale;
+    const options = {
+      hour: `numeric`,
+      minute: `numeric`,
+      day: `numeric`,
+      month: `long`,
+      year: `numeric`,
+      weekday: `long`,
+    };
+    labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(
+      now
+    );
+
     updateUI(currentAccount);
 
     inputLoginUsername.value = inputLoginPin.value = ``;
@@ -297,7 +316,7 @@ btnClose.addEventListener('click', function (e) {
     );
 
     accounts.splice(index, 1);
-    containerApp.style.opacity = 00;
+    containerApp.style.opacity = 0;
     labelWelcome.textContent = `Log in to get started`;
   }
 });
