@@ -16,9 +16,9 @@ const account1 = {
     '2022-01-28T09:15:04.904Z',
     '2022-04-01T10:17:24.185Z',
     '2022-05-08T14:11:59.604Z',
-    '2022-07-26T17:01:17.194Z',
-    '2022-07-28T23:36:17.929Z',
-    '2022-08-01T10:51:36.790Z',
+    '2022-11-24T17:01:17.194Z',
+    '2022-11-28T23:36:17.929Z',
+    '2022-11-29T10:51:36.790Z',
   ],
 };
 
@@ -103,6 +103,25 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 
+const formateDate = date => {
+  const date1 = new Date(date);
+  const date2 = new Date();
+  const daysPassed = Math.round(
+    Math.abs((date2 - date1) / (1000 * 60 * 60 * 24))
+  );
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return `Yesterday`;
+  if (daysPassed <= 7) return `${daysPassed} Days ago`;
+  else {
+    const day = `${date1.getDate()}`.padStart(2, 0);
+    const month = `${date1.getMonth() + 1}`.padStart(2, 0);
+    const year = date1.getFullYear();
+    const displayDate = `${day}/${month}/${year}`;
+    return displayDate;
+  }
+};
+
 const displayMovements = (acc, sort = false) => {
   containerMovements.innerHTML = '';
 
@@ -112,11 +131,8 @@ const displayMovements = (acc, sort = false) => {
 
   movs.forEach((mov, i) => {
     const type = mov > 0 ? `deposit` : `withdrawal`;
-    const date = new Date(acc.movementsDates[i]);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `${day}/${month}/${year}`;
+
+    const displayDate = formateDate(acc.movementsDates[i]);
 
     const html = `  
     <div class="movements__row">
@@ -180,9 +196,9 @@ const updateUI = function (acc) {
 let currentAccount;
 let sorted = false;
 // fake login
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 100;
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
 
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
