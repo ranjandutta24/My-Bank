@@ -121,7 +121,8 @@ nav {
   grid-row: 2 / span 3;
   background-color: #fff;
   border-radius: 1rem;
-  overflow: scroll;
+  overflow-y: scroll;
+  box-shadow: 0 0 10px 0px #8080804f;
 }
 
 .movements__row {
